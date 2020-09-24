@@ -1,0 +1,89 @@
+/******************************************************************************/
+/* Coded by hand at Albright Labs LLC                                         */
+/*                                                                            */
+/* Albright Labs                                                              */
+/* A Software Company                                                         */
+/* hello@albrightlabs.com                                                     */
+/* (610) 756-5060                                                             */
+/* PO Box 1537, Albrightsville, PA 18210                                      */
+/*                                                                            */
+/******************************************************************************/
+
+/**
+ * Breadcrumbs
+ */
+#breadcrumbs {
+  position: fixed;
+  z-index: 10;
+  top: 78px;
+}
+
+/**
+ * Wrapper
+ */
+#wrapper {
+  padding-top: 78px;
+}
+
+/**
+ * Fonts
+ */
+.fa-sun.fa-lg {
+  font-size: 1.8rem;
+}
+.fa-moon.fa-lg {
+  font-size: 1.6rem;
+}
+
+/**
+ * Remove body transition
+ */
+body {
+  webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  transition: none;
+}
+
+ /**
+  * Updates 5/23/2020
+  */
+#wrapper * {
+ line-height: 1.8rem;
+}
+#wrapper h1,
+#wrapper h2,
+#wrapper h3,
+#wrapper h4,
+#wrapper h5,
+#wrapper h6,
+#wrapper p,
+#wrapper ul,
+#wrapper ol {
+ margin-top: 0;
+ margin-bottom: 20px;
+}
+#wrapper h1,
+#wrapper h2,
+#wrapper h3,
+#wrapper h4,
+#wrapper h5,
+#wrapper h6 {
+  font-weight: bold;
+}
+#wrapper li > ul,
+#wrapper li > ol {
+ margin-bottom: 0;
+}
+#wrapper mark {
+ background-color: transparent;
+ color: #fff000;
+}
+#wrapper h3 {
+  margin-top: 40px;
+}
+#wrapper code,
+#wrapper pre {
+  font-size: 100%;
+  color: #0063b1;
+}

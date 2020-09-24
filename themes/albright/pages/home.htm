@@ -1,0 +1,94 @@
+url="/"
+title="Login"
+meta_title="Login"
+layout="default"
+description="Login to your client account at Albright Labs."
+meta_description="Login to your client account at Albright Labs. View due and paid invoices, open and manage support tickets, services, and agreements."
+
+==
+
+use AlbrightLabs\ShortenLinks\Models\Link;
+use Vdlp\Hashids\Classes\HashidsManager;
+
+/**
+ * Login
+ */
+function onShorten()
+{
+  $data = post();
+  $rules = [
+      'url' => 'required|between:2,65000',
+  ];
+  $validation = Validator::make($data, $rules);
+  if ($validation->fails()) {
+      throw new ValidationException($validation);
+  }
+  if($link = Link::where('url', $data['url'])->first()){
+      $link->created++;
+      $link->save();
+  }
+  else{
+      $link = new Link;
+      $link->url = $data['url'];
+      $link->opened = 0;
+      $link->created = 1;
+      $link->save();
+      $id = $link->id;
+      $hashidsManager = resolve(HashidsManager::class);
+      $code = $hashidsManager->instance('different-configuration')->encode($id);
+      $link->code =  $code;
+      $link->save();
+  }
+
+  $this['link'] = 'http://abl.fyi/l/'.$link->code;
+  return [
+      '#linkContainer' => $this->renderPartial('layout/link'),
+  ];
+}
+
+==
+
+<!-- Wrapper -->
+<div id="wrapper animate animate-fadeIn">
+
+  <!-- Page Title -->
+  <section id="page-content">
+    <div class="container">
+      <div class="row">
+        <div class="col text-center">
+          <form class="form-signin" data-request="onShorten" data-request-flash>
+            <img class="mb-4 p-2" src="{{'assets/img/logo.svg'|theme}}" alt="" width="72" height="72" style="background-color: #dfe6e9;">
+            <h1 class="h3 mb-3" style="font-weight:700;">URL Shortener</h1>
+            <div class="form-group text-left">
+              <label for="inputUrl" class="sr-only">URL</label>
+              <input type="text" id="inputUrl" class="form-control" autofocus="" name="url">
+            </div>
+            <div class="form-group mt-3">
+              <button class="btn btn-lg btn-primary btn-block" type="submit" data-attach-loading>Shorten</button>
+            </div>
+          </form>
+          <div id="linkContainer" class="mt-5">
+            <!-- link will return here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /Page Title -->
+
+</div>
+<!-- /Wrapper -->
+
+{% put styles %}
+  <style type="text/css">
+    #page-content {
+      padding: 160px 0;
+      height: 100%;
+      height: 100vh;
+    }
+    #page-content form {
+      max-width: 320px;
+      margin: 0 auto;
+    }
+  </style>
+{% endput %}

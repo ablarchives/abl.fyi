@@ -1,0 +1,173 @@
+title="Default"
+description="The default layout for the website"
+
+==
+
+/**
+ * Generate the canonical url
+ * Get the view mode
+ */
+function onStart()
+{
+  // check color mode
+  $this->page['mode'] = Session::get('mode', 'dark');
+
+  // check if debug mode
+  if(Config::get('app.debug') == true){
+    $this->page['do_not_track'] = true;
+  }else{
+    $this->page['do_not_track'] = false;
+  }
+
+  // generate the canonical url
+  $this->page['canonical_url'] = str_replace('http://', 'https://', str_replace('www.', '', 'https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']));
+}
+
+/**
+ * Toggle light or dark mode
+ */
+function onToggleMode()
+{
+  if(Session::get('mode', 'dark') == 'dark'){
+    Session::put('mode', 'light');
+  }
+  else{
+    Session::put('mode', 'dark');
+  }
+}
+
+==
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="title" content="{{this.page.meta_title}}">
+    <meta name="description" content="{{this.page.meta_description}}">
+    <meta name="keywords" content="Design,Development,Digital Strategy,Custom Software,Process Automation,B2B Services">
+    <meta name="author" content="Albright Labs LLC">
+    <meta name="image" content="{{'assets/img/albright-labs-logo-light.png'|theme}}">
+    {% if 'sop' in this.page.id %}
+      <meta name="robots" content="noindex">
+    {% endif %}
+
+    <!-- Page Title -->
+    <title>{{this.page.title}} | Albright Labs</title>
+
+    <!-- Canonical -->
+    <link rel="canonical" href="{{this.page.canonical_url}}" />
+
+    <!-- Styles -->
+    <link href="{{ [
+      'assets/vendor/bootstrap/css/bootstrap.css',
+      'assets/css/default.css',
+      'assets/css/markdown.css',
+      'assets/css/hamburgers.css'
+    ]|theme }}" rel="stylesheet">
+    {% styles %}
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="https://albrightlabs.com/themes/albright/assets/img/favicons/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="https://albrightlabs.com/themes/albright/assets/img/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="https://albrightlabs.com/themes/albright/assets/img/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="https://albrightlabs.com/themes/albright/assets/img/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="https://albrightlabs.com/themes/albright/assets/img/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="https://albrightlabs.com/themes/albright/assets/img/favicons/apple-touch-icon-152x152.png" />
+    <link rel="icon" type="image/png" href="https://albrightlabs.com/themes/albright/assets/img/favicons/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="https://albrightlabs.com/themes/albright/assets/img/favicons/favicon-16x16.png" sizes="16x16" />
+    <meta name="application-name" content="Albright Labs"/>
+    <meta name="msapplication-TileColor" content="#0984e3" />
+    <meta name="msapplication-TileImage" content="https://albrightlabs.com/themes/albright/assets/img/favicons/mstile-144x144.png" />
+
+    {% if not this.page.do_not_track %}
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150984134-1"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-150984134-1');
+      </script>
+    {% endif %}
+
+    <!-- Schema.org for Google -->
+    <meta itemprop="name" content="{{this.page.title}} | Albright Labs | A Software Company">
+    <meta itemprop="description" content="{{this.page.meta_description}}">
+    <meta itemprop="image" content="{{'assets/img/albright-labs-logo-light.png'|theme}}">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{% if this.page.id != 'home' %}{{this.page.title}} | {% endif %}Albright Labs | A Software Company">
+    <meta name="twitter:description" content="{{this.page.meta_description}}">
+    <meta name="twitter:site" content="@albrightlabs">
+    <meta name="twitter:image:src" content="{{'assets/img/albright-labs-logo-light.png'|theme}}">
+    <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+    <meta name="og:title" content="{% if this.page.id != 'home' %}{{this.page.title}} | {% endif %}Albright Labs | A Software Company">
+    <meta name="og:description" content="{{this.page.meta_description}}">
+    <meta name="og:image" content="{{'assets/img/albright-labs-logo-light.png'|theme}}">
+    <meta name="og:url" content="https://albrightlabs.com/">
+    <meta name="og:site_name" content="Albright Labs">
+    <meta name="og:locale" content="en_US">
+    <meta name="og:type" content="website">
+
+  </head>
+  <body class="{{this.page.id}} {% if this.page.mode == 'dark' %}background-black{% endif %}">
+
+    {% partial 'markdown/header' %}
+
+    {% page %}
+
+    {% partial 'markdown/footer' %}
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS, then Albright Labs JS -->
+    <script src="{{ [
+      'assets/vendor/jquery/jquery.min.js',
+      'assets/vendor/popper/popper.min.js',
+      'assets/vendor/bootstrap/js/bootstrap.min.js',
+      'assets/js/default.js',
+      'assets/js/markdown.js'
+    ]|theme }}"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500,600,700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/e7e2bcbe70.js"></script>
+
+    {% framework extras %}
+    {% scripts %}
+
+    <!-- Show the stripe loading globally -->
+		<script>
+			$(document).on('ajaxSetup', function(event, context) {
+				context.options.loading = $.oc.stripeLoadIndicator;
+			});
+		</script>
+
+    <!-- Structured Data -->
+    <script type='application/ld+json'>
+      {
+          "@context": "http://schema.org/",
+          "@type": "Organization",
+          "legalName": "Albright Labs LLC",
+          "url": "https://albrightlabs.com",
+          "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "6107565060"
+          },
+          "logo": "https://albrightlabs.com/themes/albright/assets/img/albright-labs-logo-light.png",
+          "sameAs": "@albrightlabs",
+          "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "PO Box 1537",
+              "addressLocality": "Albrightsville",
+              "addressRegion": "PA",
+              "postalCode": "18210",
+              "addressCountry": "US"
+          }
+      }
+    </script>
+
+  </body>
+</html>

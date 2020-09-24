@@ -1,0 +1,171 @@
+title="Default"
+description="The default layout for the website"
+
+==
+
+==
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="title" content="{{this.page.meta_title}}">
+    <meta name="description" content="{{this.page.meta_description}}">
+    <meta name="keywords" content="Design,Development,Digital Strategy,Custom Software,Process Automation,B2B Services">
+    <meta name="author" content="Albright Labs LLC">
+    <meta name="image" content="{{'assets/img/albright-labs-logo-light.png'|theme}}">
+    {% if 'account' in this.page.id or 'lead' in this.page.id %}
+      <meta name="robots" content="noindex">
+    {% endif %}
+
+    <!-- Page Title -->
+    <title>{{this.page.title}} | Albright Labs{% if this.page.id == 'home' %} | A Software Company {% else %}{% endif %}</title>
+
+    <!-- Canonical -->
+    <link rel="canonical" href="{{this.page.canonical_url}}" />
+
+    <!-- Styles -->
+    <link href="{{ ['assets/vendor/bootstrap/css/bootstrap.css','assets/css/default.css','assets/css/hamburgers.css']|theme }}" rel="stylesheet">
+    {% styles %}
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="https://albrightlabs.com/themes/albright/assets/img/favicons/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="https://albrightlabs.com/themes/albright/assets/img/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="https://albrightlabs.com/themes/albright/assets/img/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="https://albrightlabs.com/themes/albright/assets/img/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="https://albrightlabs.com/themes/albright/assets/img/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="https://albrightlabs.com/themes/albright/assets/img/favicons/apple-touch-icon-152x152.png" />
+    <link rel="icon" type="image/png" href="https://albrightlabs.com/themes/albright/assets/img/favicons/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="https://albrightlabs.com/themes/albright/assets/img/favicons/favicon-16x16.png" sizes="16x16" />
+    <meta name="application-name" content="Albright Labs"/>
+    <meta name="msapplication-TileColor" content="#0984e3" />
+    <meta name="msapplication-TileImage" content="https://albrightlabs.com/themes/albright/assets/img/favicons/mstile-144x144.png" />
+    <meta name="theme-color" content="#0984e3">
+
+    {% if not this.page.do_not_track %}
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150984134-1"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-150984134-1');
+      </script>
+    {% endif %}
+
+    <!-- Schema.org for Google -->
+    <meta itemprop="name" content="{% if this.page.id != 'home' %}{{this.page.title}} | {% endif %}Albright Labs | A Software Company">
+    <meta itemprop="description" content="{{this.page.meta_description}}">
+    <meta itemprop="image" content="{{'assets/img/albright-labs-logo-light.png'|theme}}">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{% if this.page.id != 'home' %}{{this.page.title}} | {% endif %}Albright Labs | A Software Company">
+    <meta name="twitter:description" content="{{this.page.meta_description}}">
+    <meta name="twitter:site" content="@albrightlabs">
+    <meta name="twitter:image:src" content="{{'assets/img/albright-labs-logo-light.png'|theme}}">
+    <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+    <meta name="og:title" content="{% if this.page.id != 'home' %}{{this.page.title}} | {% endif %}Albright Labs | A Software Company">
+    <meta name="og:description" content="{{this.page.meta_description}}">
+    <meta name="og:image" content="{{'assets/img/albright-labs-logo-light.png'|theme}}">
+    <meta name="og:url" content="https://albrightlabs.com/">
+    <meta name="og:site_name" content="Albright Labs">
+    <meta name="og:locale" content="en_US">
+    <meta name="og:type" content="website">
+
+  </head>
+  <body class="{{this.page.id}}">
+
+    {% if raining %}
+      <section id="snowdayBanner">
+        <div class="container">
+          <div class="row">
+            <div class="col my-2 text-center">
+              <p class="mb-0 font-weight-semibold">
+                <a href="{{''|page}}" class="text-white">Snowday Banner Content</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    {% endif %}
+
+    {% partial 'layout/header' %}
+
+    {% page %}
+
+    {% partial 'layout/footer' %}
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS, then Albright Labs JS -->
+    <script src="{{ [
+      'assets/vendor/jquery/jquery.min.js',
+      'assets/vendor/popper/popper.min.js',
+      'assets/vendor/bootstrap/js/bootstrap.min.js',
+      'assets/js/default.js'
+    ]|theme }}"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500,600,700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/e7e2bcbe70.js"></script>
+
+    <!-- Animate -->
+    <script>
+      $(window).on('scroll', function() {
+        $('.animate').each(function() { if (isOnScreen($(this))) { $(this).addClass('active'); } });
+      });
+      function isOnScreen(elem) {
+      	if( elem.length == 0 ) {
+      		return;
+      	}
+      	var $window = jQuery(window)
+      	var viewport_top = $window.scrollTop()
+      	var viewport_height = $window.height()
+      	var viewport_bottom = viewport_top + viewport_height
+      	var $elem = jQuery(elem)
+      	var top = $elem.offset().top + (viewport_height-(viewport_height/1.5))
+      	var height = $elem.height()
+      	var bottom = top + height
+        return (top >= viewport_top && top < viewport_bottom) ||
+      	(height > viewport_height && top <= viewport_top && bottom >= viewport_bottom)
+      }
+    </script>
+
+    {% framework extras %}
+    {% scripts %}
+
+    <!-- Show the stripe loading globally -->
+		<script>
+			$(document).on('ajaxSetup', function(event, context) {
+				context.options.loading = $.oc.stripeLoadIndicator;
+			});
+		</script>
+
+    <!-- Structured Data -->
+    <script type='application/ld+json'>
+      {
+          "@context": "http://schema.org/",
+          "@type": "Organization",
+          "legalName": "Albright Labs LLC",
+          "url": "https://albrightlabs.com",
+          "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "6107565060"
+          },
+          "logo": "https://albrightlabs.com/themes/albright/assets/img/albright-labs-logo-light.png",
+          "sameAs": "@albrightlabs",
+          "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "PO Box 1537",
+              "addressLocality": "Albrightsville",
+              "addressRegion": "PA",
+              "postalCode": "18210",
+              "addressCountry": "US"
+          }
+      }
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-12">
+    <a href="{{link}}" target="_blank" rel="nofollow noreferrer">{{link}}</a> &nbsp; <a href="javascript:void(0);" onclick="copyShortUrl()" class=""><span class="far fa-copy fa-lg"></span></a>
+    <input type="text" value="{{link}}" id="shortUrl" style="display:none;">
+  </div>
+</div>
+
+<script>
+    function copyShortUrl()
+    {
+      var copyText = document.getElementById('shortUrl');
+      copyText.select();
+      copyText.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+      console.log('Copied the link: ' + copyText.value);
+    }
+</script>

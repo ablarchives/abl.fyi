@@ -1,0 +1,32 @@
+url="/l/:code"
+title="Open"
+meta_title="Open"
+layout="default"
+description="Lengthen and open a link from code provided in URL."
+meta_description="Lengthen and open a link from code provided in URL."
+
+==
+
+use AlbrightLabs\ShortenLinks\Models\Link;
+
+function onStart()
+{
+  $data = post();
+  $rules = [
+      'url' => 'required|between:2,65000',
+  ];
+  $validation = Validator::make($data, $rules);
+  if ($validation->fails()) {
+      throw new ValidationException($validation);
+  }
+  if($link = Link::where('code', $this->param('code'))->first()){
+      $link->opened++;
+      $link->save();
+      return Redirect::to($link->url);
+  }
+  else{
+      return Redirect::to('/');
+  }
+}
+
+==
